@@ -7,7 +7,7 @@ describe('arge', () => {
     const argv = [
       ...baseArgs,
       '-f',
-      '--dry-run',
+      '--dryRun',
       '--mode=development',
       '--test=false',
       '--retries=100',
@@ -15,7 +15,7 @@ describe('arge', () => {
 
     expect(arge(argv)).toEqual({
       f: true,
-      'dry-run': true,
+      dryRun: true,
       mode: 'development',
       retries: 100,
       test: false,
@@ -23,26 +23,34 @@ describe('arge', () => {
   })
 
   it('converts comma separated values to an array', () => {
-    const argv = [...baseArgs, '--colors=red, blue,green']
+    const argv = [...baseArgs, '--colours=red, blue,green']
 
     expect(arge(argv)).toEqual({
-      colors: ['red', 'blue', 'green'],
+      colours: ['red', 'blue', 'green'],
     })
   })
 
   it('converts space separated values to an array', () => {
-    const argv = [...baseArgs, '--colors=red  blue green']
+    const argv = [...baseArgs, '--colours=red  blue green']
 
     expect(arge(argv)).toEqual({
-      colors: ['red', 'blue', 'green'],
+      colours: ['red', 'blue', 'green'],
     })
   })
 
   it('can handle non-argv input', () => {
-    const argv = ['--colors=red  blue green']
+    const argv = ['--colours=red  blue green']
 
-    expect(arge(argv, false)).toEqual({
-      colors: ['red', 'blue', 'green'],
+    expect(arge(argv, { isArgv: false })).toEqual({
+      colours: ['red', 'blue', 'green'],
+    })
+  })
+
+  it('does not convert keys to camelCase if camelCaseKeys is false', () => {
+    const argv = [...baseArgs, '--my-favourite-colours=red  blue green']
+
+    expect(arge(argv, { camelCaseKeys: false })).toEqual({
+      'my-favourite-colours': ['red', 'blue', 'green'],
     })
   })
 })

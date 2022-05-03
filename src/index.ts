@@ -1,3 +1,8 @@
+interface Options {
+  isArgv?: boolean
+  camelCaseKeys?: boolean
+}
+
 const parse = (value: string | boolean | number) => {
   if (['true', 'false', true, false].includes(value as string)) {
     return JSON.parse(value as string)
@@ -21,12 +26,23 @@ const parse = (value: string | boolean | number) => {
   return value
 }
 
-export const arge = (args: string[], isArgv = true) => {
-  const flags = isArgv ? args.filter((_, index) => index > 1) : args
+export const arge = (
+  args: string[],
+  options: Options = {
+    isArgv: true,
+    camelCaseKeys: true,
+  }
+) => {
+  const flags =
+    options?.isArgv !== false ? args.filter((_, index) => index > 1) : args
 
   return flags.reduce((acc, curr) => {
     const [k, v] = curr.split('=')
-    const key = k.replace(/^-+/, '')
+    let key = k.replace(/^-+/, '')
+
+    key = options?.camelCaseKeys
+      ? key.replace(/-([a-z])/g, g => g[1].toUpperCase())
+      : key
 
     return {
       ...acc,
