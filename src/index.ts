@@ -3,24 +3,27 @@ interface Options {
   camelCaseKeys?: boolean
 }
 
-const parse = (value: string | boolean | number) => {
-  if (['true', 'false', true, false].includes(value as string)) {
-    return JSON.parse(value as string)
+const toArray = (value: string, delimiter: string) =>
+  value
+    .split(delimiter)
+    .map(v => v.trim())
+    .filter(v => v)
+
+const parse = (value: string): string | boolean | number | string[] => {
+  if (['true', 'false', true, false].includes(value)) {
+    return JSON.parse(value)
   }
 
   if (!Number.isNaN(Number(value))) {
-    return parseFloat(value as string)
+    return parseFloat(value)
   }
 
-  if ((value as string).includes(',')) {
-    return (value as string).split(',').map(v => v.trim())
+  if (value.includes(',')) {
+    return toArray(value, ',')
   }
 
-  if ((value as string).includes(' ')) {
-    return (value as string)
-      .split(' ')
-      .map(v => v.trim())
-      .filter(v => !!v)
+  if (value.includes(' ')) {
+    return toArray(value, ' ')
   }
 
   return value
@@ -32,21 +35,20 @@ export const arge = (
     isArgv: true,
     camelCaseKeys: true,
   }
-) => {
-  const flags =
-    options?.isArgv !== false ? args.filter((_, index) => index > 1) : args
-
-  return flags.reduce((acc, curr) => {
-    const [k, v] = curr.split('=')
+) =>
+  (options.isArgv !== false
+    ? args.filter((_, index) => index > 1)
+    : args
+  ).reduce((acc, curr) => {
+    const [k, v = 'true'] = curr.split('=')
     let key = k.replace(/^-+/, '')
 
-    key = options?.camelCaseKeys
+    key = options.camelCaseKeys
       ? key.replace(/-([a-z])/g, g => g[1].toUpperCase())
       : key
 
     return {
       ...acc,
-      [key]: parse(v || true),
+      [key]: parse(v),
     }
   }, {})
-}

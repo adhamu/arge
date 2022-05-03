@@ -7,7 +7,7 @@ const options = {
   external: Object.keys(require('./package.json').dependencies || {}),
   logLevel: 'info',
   minify: true,
-  target: ['esnext'],
+  target: [require('./tsconfig.json').compilerOptions.target],
 }
 
 build({

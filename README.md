@@ -2,21 +2,27 @@
 
 A tiny package to parse CLI flags and arguments into an object.
 
-## Requirements
-
-- Node 16+
-
 ## Installation
 
 ```shell
 yarn add arge
+
+# or
+npm i arge
 ```
 
 ## Usage
 
-```typescript
-import { arge } from 'arge'
+```javascript
+const { arge } = require('arge')
 
+// or
+import { arge } from 'arge'
+```
+
+Then:
+
+```typescript
 const args = arge(process.argv)
 ```
 
@@ -72,8 +78,6 @@ If you wanted to pass an arbitrary array of flags that don't come from `process.
 For example
 
 ```typescript
-import { arge } from 'arge'
-
 const flags = [
   '--dry-run',
   '--mode=development',
@@ -104,8 +108,6 @@ Default: `true`
 This converts hyphen separated keys into camel case. To prevent this behaviour, you can set this value to `false`.
 
 ```typescript
-import { arge } from 'arge'
-
 const flags = ['--dry-run']
 
 const args = arge(flags, { camelCaseKeys: false })

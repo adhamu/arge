@@ -7,7 +7,7 @@ describe('arge', () => {
     const argv = [
       ...baseArgs,
       '-f',
-      '--dryRun',
+      '--dry-run',
       '--mode=development',
       '--test=false',
       '--retries=100',
