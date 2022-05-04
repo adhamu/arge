@@ -56,7 +56,7 @@ jobs:
         if: github.ref != 'refs/heads/main'
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
           tag_name: ${{ steps.env_vars.outputs.CURRENT_VERSION }}
           release_name: ${{ steps.env_vars.outputs.CURRENT_VERSION }}
