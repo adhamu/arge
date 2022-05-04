@@ -3,13 +3,15 @@ interface Options {
   camelCaseKeys?: boolean
 }
 
+type Value = string | boolean | number | string[]
+
 const toArray = (value: string, delimiter: string) =>
   value
     .split(delimiter)
     .map(v => v.trim())
     .filter(v => v)
 
-const parse = (value: string): string | boolean | number | string[] => {
+const parse = (value: string): Value => {
   if (['true', 'false', true, false].includes(value)) {
     return JSON.parse(value)
   }
@@ -35,7 +37,7 @@ export const arge = (
     isArgv: true,
     camelCaseKeys: true,
   }
-) =>
+): Record<string, Value> =>
   (options.isArgv !== false
     ? args.filter((_, index) => index > 1)
     : args
