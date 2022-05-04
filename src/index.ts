@@ -41,7 +41,7 @@ export const arge = (
     : args
   ).reduce((acc, curr) => {
     const [k, v = 'true'] = curr.split('=')
-    let key = k.replace(/^-+/, '')
+    let key = k.trim().replace(/^-+/, '')
 
     key = options.camelCaseKeys
       ? key.replace(/-([a-z])/g, g => g[1].toUpperCase())
