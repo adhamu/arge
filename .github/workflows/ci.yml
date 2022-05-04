@@ -54,7 +54,7 @@ jobs:
 
       - name: Changelog
         id: changelog
-        uses: mikepenz/release-changelog-builder-action@latest
+        uses: mikepenz/release-changelog-builder-action
         with:
           fromTag: ${{ steps.env_vars.outputs.PUBLISHED_VERSION }}
           toTag: ${{ steps.env_vars.outputs.CURRENT_VERSION }}
