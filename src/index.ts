@@ -49,6 +49,6 @@ export const arge = (
 
     return {
       ...acc,
-      [key]: parse(v),
+      [`${key.trim()}`]: parse(v.trim()),
     }
   }, {})

@@ -22,6 +22,25 @@ describe('arge', () => {
     })
   })
 
+  it('trims spaces between keys and values', () => {
+    const argv = [
+      ...baseArgs,
+      '-f ',
+      '--dry-run ',
+      '--mode =   development',
+      '--test = false',
+      '--retries  =   100',
+    ]
+
+    expect(arge(argv)).toEqual({
+      f: true,
+      dryRun: true,
+      mode: 'development',
+      retries: 100,
+      test: false,
+    })
+  })
+
   it('converts comma separated values to an array', () => {
     const argv = [...baseArgs, '--colours=red, blue,green']
 
