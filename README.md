@@ -22,7 +22,7 @@ import { arge } from 'arge'
 
 Then:
 
-```typescript
+```javascript
 const args = arge(process.argv)
 ```
 
@@ -41,6 +41,33 @@ node app.js --dry-run --mode=development --test=false --retries=100
   "test": false,
   "retries": 100
 }
+```
+
+## Typescript
+
+For type safety, `arge` will accept a generic for typing the resulting object.
+
+### Example
+
+```typescript
+const { foo, bar } = arge(process.argv)
+```
+
+In the above scenario, `foo` and `bar` will report the following:
+
+> Property 'foo' does not exist on type 'unknown'
+
+> Property 'bar' does not exist on type 'unknown'
+
+To address this, we can apply a generic:
+
+```typescript
+interface Args {
+  foo: string
+  bar: number
+}
+
+const { foo, bar } = arge<Args>(process.argv)
 ```
 
 ## API

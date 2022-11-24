@@ -31,13 +31,13 @@ const parse = (value: string): Value => {
   return value
 }
 
-export const arge = (
+export const arge = <T>(
   args: string[],
   options: Options = {
     isArgv: true,
     camelCaseKeys: true,
   }
-): Record<string, Value> =>
+): T =>
   (options.isArgv !== false
     ? args.filter((_, index) => index > 1)
     : args
@@ -53,4 +53,4 @@ export const arge = (
       ...acc,
       [`${key.trim()}`]: parse(v.trim()),
     }
-  }, {})
+  }, {} as T)
