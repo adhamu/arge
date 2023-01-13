@@ -16,10 +16,10 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-          echo ::set-output name=CURRENT_VERSION::$(cat package.json | jq -r '.version')
-          echo ::set-output name=PUBLISHED_VERSION::$(npm view arge version)
-          echo ::set-output name=BRANCH::${GITHUB_REF##*/}
+          echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+          echo "NEW_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_OUTPUT
+          echo "PUBLISHED_VERSION=$(npm view arge version)" >> $GITHUB_OUTPUT
+          echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
         id: env_vars
 
       - name: Install Node.js ${{ steps.env_vars.outputs.NODE_VERSION }}
@@ -63,15 +63,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
-          tag_name: ${{ steps.env_vars.outputs.CURRENT_VERSION }}
-          release_name: ${{ steps.env_vars.outputs.CURRENT_VERSION }}
-          body: "**Full Changelog**: https://github.com/adhamu/arge/compare/${{ steps.env_vars.outputs.PUBLISHED_VERSION }}...${{ steps.env_vars.outputs.CURRENT_VERSION }}"
+          tag_name: ${{ steps.env_vars.outputs.NEW_VERSION }}
+          release_name: ${{ steps.env_vars.outputs.NEW_VERSION }}
+          body: "**Full Changelog**: https://github.com/adhamu/arge/compare/${{ steps.env_vars.outputs.PUBLISHED_VERSION }}...${{ steps.env_vars.outputs.NEW_VERSION }}"
           draft: false
           prerelease: false
 
       - name: Publish to Registry
         run: |
-          pkg_version=${{ steps.env_vars.outputs.CURRENT_VERSION }}
+          pkg_version=${{ steps.env_vars.outputs.NEW_VERSION }}
           branch=${{ steps.env_vars.outputs.BRANCH }}
 
           if [[ $branch != "main" ]]; then
