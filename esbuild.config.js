@@ -1,13 +1,16 @@
 const { build } = require('esbuild')
 
+const package = require('./package.json')
+const tsconfig = require('./tsconfig.json')
+
 const options = {
   bundle: true,
   sourcemap: false,
   entryPoints: ['./src/index.ts'],
-  external: Object.keys(require('./package.json').dependencies || {}),
+  external: Object.keys(package.dependencies || {}),
   logLevel: 'info',
   minify: true,
-  target: [require('./tsconfig.json').compilerOptions.target],
+  target: [tsconfig.compilerOptions.target],
 }
 
 build({
