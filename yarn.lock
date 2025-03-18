@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@adhamu/zero@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@adhamu/zero/-/zero-7.0.0.tgz#1637e35c6c506522489e1fe1768b7ae847ccbb29"
-  integrity sha512-YzQQJjyntKGRFvwUE/jl7UayfsAk2vrDDYGVda6n2zESW9Q0TuB7o5VPLTNK/Rwzi/FvFC7/0Hswr/WlwlSvDg==
+"@adhamu/zero@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@adhamu/zero/-/zero-7.0.1.tgz#c34f6111c957000c8f133c3a85bad9fa1d3f76cd"
+  integrity sha512-h4advYhhvppSEFvWHhR0wvbvo7FnjWJ67iMY65drRQBUFAyFNHoTFQtQ5we8Xahh3L9He9OzEusNReoFl/PvsQ==
   dependencies:
     "@clack/prompts" "^0.10.0"
     "@emotion/eslint-plugin" "^11.12.0"
